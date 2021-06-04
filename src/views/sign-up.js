@@ -4,54 +4,49 @@ import globalStyles from '../styles/global';
 import {useNavigation} from '@react-navigation/native';
 import {useMutation} from '@apollo/client';
 import {SIGN_UP} from '../gql/user';
+// import Toast from '../components/common/Toast';
 
 const SignUp = () => {
-  const [name, setName] = useState('oddie');
-  const [email, setEmail] = useState('oddie@email.com');
+  const [name, setName] = useState('random');
+  const [email, setEmail] = useState('email2@email.com');
   const [password, setPassword] = useState('123456');
-  const [error, setError] = useState('');
 
-  const [signUp2] = useMutation(SIGN_UP);
+  const [signUp] = useMutation(SIGN_UP);
   const navigation = useNavigation();
   const toast = useToast();
 
   const handleSubmit = async () => {
     if (name === '' || email === '' || password === '') {
-      setError('All fields are required');
+      Toast('error', 'Something went wrong', 'All fields are required');
       return;
     }
     if (password.length < 6) {
-      setError('The password must be at least 6 characters long');
+      Toast(
+        'error',
+        'Something went wrong',
+        'The password must be at least 6 characters long',
+      );
       return;
     }
 
     try {
-      // navigation.navigate('Login');
       const input = {name, email, password};
-      const {data} = await signUp2({
-        variables: {
-          input,
-        },
+      const {data} = await signUp({
+        variables: {input},
       });
-      console.log('ok');
-      console.log(data);
-      // console.log(data.signUp);
+      Toast('success', 'Account registered', data.registerUser);
+      navigation.navigate('Login');
     } catch (e) {
-      console.log(e.networkError.result.errors);
+      Toast('error', 'Something went wrong', e.message);
     }
-    // toast.show({
-    //   title: 'Account verified',
-    //   status: 'success',
-    //   description: 'Thanks for signing up with us.',
-    //   duration: 3000,
-    // });
   };
 
-  const showAlert = () => {
+  const Toast = (type, title, description) => {
     toast.show({
-      title: 'Account verified',
-      status: 'success',
-      description: 'Thanks for signing up with us.',
+      title,
+      status: type,
+      description,
+      duration: 3000,
     });
   };
 
@@ -83,7 +78,6 @@ const SignUp = () => {
           <Text style={globalStyles.buttonText}>sign up</Text>
         </Button>
       </Stack>
-      {/* {error && showAlert()} */}
     </Center>
   );
 };
