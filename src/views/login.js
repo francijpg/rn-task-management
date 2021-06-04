@@ -1,12 +1,56 @@
 import React, {useState} from 'react';
-import {Button, Text, Input, Center, Stack} from 'native-base';
+import {Button, Text, Input, Center, Stack, useToast} from 'native-base';
 import globalStyles from '../styles/global';
 import {useNavigation} from '@react-navigation/native';
+import {useMutation} from '@apollo/client';
+import {LOG_IN} from '../gql/users';
+import {setToken} from '../utils/token';
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('email@email.com');
+  const [password, setPassword] = useState('123456');
+  const [logIn] = useMutation(LOG_IN);
+
   const navigation = useNavigation();
+  const toast = useToast();
+
+  const Toast = (type, title, description) => {
+    toast.show({
+      title,
+      status: type,
+      description,
+      duration: 3000,
+    });
+  };
+
+  const handleSubmit = async () => {
+    if (email === '' || password === '') {
+      Toast('error', 'Something went wrong', 'All fields are required');
+      return;
+    }
+    if (password.length < 6) {
+      Toast(
+        'error',
+        'Something went wrong',
+        'The password must be at least 6 characters long',
+      );
+      return;
+    }
+
+    try {
+      const input = {email, password};
+      const {data} = await logIn({
+        variables: {input},
+      });
+      const {token} = data.authenticateUser;
+      setToken(token);
+      Toast('success', 'Account verified', token);
+      navigation.navigate('Projects');
+    } catch (e) {
+      console.log(JSON.stringify(e, null, 2));
+      Toast('error', 'Something went wrong', e.message);
+    }
+  };
 
   return (
     <Center flex={1} bgColor={'#e84347'}>
@@ -26,7 +70,7 @@ const Login = () => {
           onChangeText={text => setPassword(text)}
           bgColor="light.100"
         />
-        <Button style={globalStyles.button}>
+        <Button style={globalStyles.button} onPress={() => handleSubmit()}>
           <Text style={globalStyles.buttonText}>log in</Text>
         </Button>
         <Text
