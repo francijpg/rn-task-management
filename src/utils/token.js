@@ -3,18 +3,19 @@ import {TOKEN} from '../constants/token';
 
 export const setToken = async value => {
   try {
-    const jsonValue = JSON.stringify(value);
-    await AsyncStorage.setItem(TOKEN, jsonValue);
+    await AsyncStorage.setItem(TOKEN, value);
   } catch (e) {
-    console.log(e);
+    console.log('setToken error :' + e);
   }
 };
 
-export const getData = async () => {
+export const getToken = async () => {
   try {
-    const jsonValue = await AsyncStorage.getItem(TOKEN);
-    return jsonValue != null ? JSON.parse(jsonValue) : null;
+    const value = await AsyncStorage.getItem(TOKEN);
+    if (value !== null) {
+      return value;
+    }
   } catch (e) {
-    console.log(e);
+    console.log('getToken error :' + e);
   }
 };
