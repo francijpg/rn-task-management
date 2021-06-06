@@ -9,6 +9,9 @@ import client from './config/apollo';
 
 import Login from './views/login';
 import SignUp from './views/sign-up';
+import Projects from './views/projects';
+import NewProject from './views/new-project';
+import Project from './views/project';
 
 export default function App() {
   const Stack = createStackNavigator();
@@ -38,6 +41,48 @@ export default function App() {
                   fontWeight: 'bold',
                 },
               }}
+            />
+            <Stack.Screen
+              name="Projects"
+              component={Projects}
+              options={{
+                title: 'Projects',
+                headerStyle: {
+                  backgroundColor: '#28303B',
+                },
+                headerTintColor: '#fff',
+                headerTitleStyle: {
+                  fontWeight: 'bold',
+                },
+              }}
+            />
+            <Stack.Screen
+              name="NewProject"
+              component={NewProject}
+              options={{
+                title: 'New Project',
+                headerStyle: {
+                  backgroundColor: '#28303B',
+                },
+                headerTintColor: '#fff',
+                headerTitleStyle: {
+                  fontWeight: 'bold',
+                },
+              }}
+            />
+            <Stack.Screen
+              name="Project"
+              component={Project}
+              options={({route}) => ({
+                title: route.params.name,
+                headerStyle: {
+                  backgroundColor: '#28303B',
+                },
+                headerTintColor: '#fff',
+                headerTitleStyle: {
+                  fontWeight: 'bold',
+                },
+              })}
             />
           </Stack.Navigator>
         </NativeBaseProvider>
