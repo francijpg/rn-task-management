@@ -8,3 +8,12 @@ export const GET_PROJECTS = gql`
     }
   }
 `;
+
+export const NEW_PROJECT = gql`
+  mutation newProject($input: ProjectInput) {
+    newProject(input: $input) {
+      id
+      name
+    }
+  }
+`;
