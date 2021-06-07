@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import {Button, Text, Input, Center, Stack, useToast} from 'native-base';
+import {Button, Text, Input, Center, Stack} from 'native-base';
 import globalStyles from '../styles/global';
 import {useNavigation} from '@react-navigation/native';
 import {useMutation} from '@apollo/client';
-import {SIGN_UP} from '../gql/user';
-// import Toast from '../components/common/Toast';
+import {SIGN_UP} from '../gql/users';
+import useCustomToast from '../hooks/useToast';
 
 const SignUp = () => {
   const [name, setName] = useState('random');
@@ -12,18 +12,19 @@ const SignUp = () => {
   const [password, setPassword] = useState('123456');
 
   const [signUp] = useMutation(SIGN_UP);
+  const {showToast} = useCustomToast();
+
   const navigation = useNavigation();
-  const toast = useToast();
 
   const handleSubmit = async () => {
     if (name === '' || email === '' || password === '') {
-      Toast('error', 'Something went wrong', 'All fields are required');
+      showToast('warning', 'Warning', 'All fields are required');
       return;
     }
     if (password.length < 6) {
-      Toast(
-        'error',
-        'Something went wrong',
+      showToast(
+        'warning',
+        'warning',
         'The password must be at least 6 characters long',
       );
       return;
@@ -34,20 +35,11 @@ const SignUp = () => {
       const {data} = await signUp({
         variables: {input},
       });
-      Toast('success', 'Account registered', data.registerUser);
+      showToast('success', 'Account registered', data.registerUser);
       navigation.navigate('Login');
     } catch (e) {
-      Toast('error', 'Something went wrong', e.message);
+      showToast('error', 'Something went wrong', e.message);
     }
-  };
-
-  const Toast = (type, title, description) => {
-    toast.show({
-      title,
-      status: type,
-      description,
-      duration: 3000,
-    });
   };
 
   return (
