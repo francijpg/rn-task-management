@@ -1,15 +1,6 @@
 import React from 'react';
-import {
-  List,
-  Text,
-  HStack,
-  CheckIcon,
-  SmallCloseIcon,
-  IconButton,
-  CheckCircleIcon,
-  Icon,
-} from 'native-base';
-import {Alert, StyleSheet} from 'react-native';
+import {Text, HStack, IconButton, CheckCircleIcon} from 'native-base';
+import {Alert} from 'react-native';
 import {useMutation} from '@apollo/client';
 import {DELETE_TASK, GET_TASKS, UPDATE_TASK} from '../../../gql/tasks';
 
@@ -87,40 +78,29 @@ const TaskList = ({task, projectId}) => {
     <>
       <HStack bgColor="light.100" w="100%" justifyContent="space-between">
         <Text
-          mx={2}
+          bold
+          mx={4}
           my={4}
           strikeThrough={task.state}
-          onLongPress={() => showDeleteAlert(task)}>
+          onLongPress={() => showDeleteAlert(task)}
+          fontSize="lg">
           {task.name}
         </Text>
         <IconButton
           colorScheme="emerald"
           borderRadius="full"
-          // styles={styles.completo}
-          icon={task.state ? <CheckCircleIcon /> : <CheckIcon />}
+          icon={
+            task.state ? (
+              <CheckCircleIcon size="10" color="green.600" />
+            ) : (
+              <CheckCircleIcon size="10" color="gray.300" />
+            )
+          }
           onPress={() => handleState(task)}
         />
-        {/* <IconButton
-          colorScheme="emerald"
-          color="red.400"
-          icon={task.state ? <CheckCircleIcon /> : <CheckIcon />}
-          onPress={() => handleState(task)}
-        /> */}
       </HStack>
     </>
   );
 };
-
-// const styles = StyleSheet.create({
-//   icono: {
-//     fontSize: 32,
-//   },
-//   completo: {
-//     color: 'green',
-//   },
-//   incompleto: {
-//     color: '#E1E1E1',
-//   },
-// });
 
 export default TaskList;
