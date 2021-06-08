@@ -1,37 +1,30 @@
 import React, {useState} from 'react';
-import {Button, Text, Input, Center, Stack, useToast} from 'native-base';
+import {Button, Text, Input, Center, Stack} from 'native-base';
 import globalStyles from '../styles/global';
 import {useNavigation} from '@react-navigation/native';
 import {useMutation} from '@apollo/client';
 import {LOG_IN} from '../gql/users';
 import {setToken} from '../utils/token';
+import useCustomToast from '../hooks/useToast';
 
 const Login = () => {
-  const [email, setEmail] = useState('email@email.com');
-  const [password, setPassword] = useState('123456');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const [logIn] = useMutation(LOG_IN);
+  const {showToast} = useCustomToast();
 
   const navigation = useNavigation();
-  const toast = useToast();
-
-  const Toast = (type, title, description) => {
-    toast.show({
-      title,
-      status: type,
-      description,
-      duration: 3000,
-    });
-  };
 
   const handleSubmit = async () => {
     if (email === '' || password === '') {
-      Toast('error', 'Something went wrong', 'All fields are required');
+      showToast('warning', 'Warning', 'All fields are required');
       return;
     }
     if (password.length < 6) {
-      Toast(
-        'error',
-        'Something went wrong',
+      showToast(
+        'warning',
+        'Warning',
         'The password must be at least 6 characters long',
       );
       return;
@@ -43,12 +36,12 @@ const Login = () => {
         variables: {input},
       });
       const {token} = data.authenticateUser;
-      setToken(token);
-      Toast('success', 'Account verified', token);
+      await setToken(token);
+      showToast('success', 'Account verified');
       navigation.navigate('Projects');
     } catch (e) {
       console.log(JSON.stringify(e, null, 2));
-      Toast('error', 'Something went wrong', e.message);
+      showToast('error', 'Something went wrong', e.message);
     }
   };
 
