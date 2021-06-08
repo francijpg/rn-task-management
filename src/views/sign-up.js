@@ -7,9 +7,9 @@ import {SIGN_UP} from '../gql/users';
 import useCustomToast from '../hooks/useToast';
 
 const SignUp = () => {
-  const [name, setName] = useState('random');
-  const [email, setEmail] = useState('email2@email.com');
-  const [password, setPassword] = useState('123456');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const [signUp] = useMutation(SIGN_UP);
   const {showToast} = useCustomToast();
