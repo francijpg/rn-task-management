@@ -1,14 +1,5 @@
 import React from 'react';
-import {
-  Button,
-  Text,
-  Center,
-  Stack,
-  Box,
-  List,
-  Heading,
-  VStack,
-} from 'native-base';
+import {Button, Text, Center, List, Heading, VStack} from 'native-base';
 import globalStyles from '../styles/global';
 import {useNavigation} from '@react-navigation/native';
 import {useQuery} from '@apollo/client';
@@ -17,9 +8,6 @@ import {StyleSheet} from 'react-native';
 
 const Projects = () => {
   const {data, loading, error} = useQuery(GET_PROJECTS);
-  // console.log(data);
-  // console.log(loading);
-  // console.log(error);
   const navigation = useNavigation();
   if (loading || error) {
     return null;
@@ -28,7 +16,7 @@ const Projects = () => {
 
   return (
     <>
-      {/* {loading && <Text>Cargando...</Text>} */}
+      {loading && <Text>Loading...</Text>}
       <Center flex={1} bgColor={'#e84347'}>
         <VStack space={4} flex={1} w="90%" mt={4}>
           <Text style={globalStyles.title}>task management</Text>
@@ -37,12 +25,16 @@ const Projects = () => {
             onPress={() => navigation.navigate('NewProject')}>
             <Text style={globalStyles.buttonText}>new project</Text>
           </Button>
-          <Heading py={4} style={globalStyles.subtitle}>
+          <Heading mt="10" size="md" color="light.100" textAlign={['center']}>
             My Projects
           </Heading>
-          <List.Ordered my={0} space={3} style={styles.list}>
+          <List.Ordered my={0} space={1} style={styles.list}>
             {getProjects.map(project => (
               <List.Item
+                _text={{
+                  fontSize: 25,
+                  fontWeight: 'bold',
+                }}
                 key={project.id}
                 bgColor="light.100"
                 onPress={() => navigation.navigate('Project', project)}>
