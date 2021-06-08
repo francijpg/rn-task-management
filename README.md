@@ -22,8 +22,8 @@ The goal of this mobile application is to manage different tasks involved in the
 
 ## Screenshots
 
-![DEMO](https://github.com/francijpg/rn-task-management/blob/master/src/assets/images/ss-1-signup.png)
-![DEMO](https://github.com/francijpg/rn-task-management/blob/master/src/assets/images/ss-2-login.png)
-![DEMO](https://github.com/francijpg/rn-task-management/blob/master/src/assets/images/ss-3-projects.png)
-![DEMO](https://github.com/francijpg/rn-task-management/blob/master/src/assets/images/ss-4-tasks.png)
-![DEMO](https://github.com/francijpg/rn-task-management/blob/master/src/assets/images/ss-5-delete-task.png)
+![DEMO](https://github.com/francijpg/rn-task-management/blob/main/src/assets/images/ss-1-signup.png)
+![DEMO](https://github.com/francijpg/rn-task-management/blob/main/src/assets/images/ss-2-login.png)
+![DEMO](https://github.com/francijpg/rn-task-management/blob/main/src/assets/images/ss-3-projects.png)
+![DEMO](https://github.com/francijpg/rn-task-management/blob/main/src/assets/images/ss-4-tasks.png)
+![DEMO](https://github.com/francijpg/rn-task-management/blob/main/src/assets/images/ss-5-delete-task.png)
