@@ -46,7 +46,7 @@ export default function App() {
               name="Projects"
               component={Projects}
               options={{
-                title: 'Projects',
+                title: 'Log Out',
                 headerStyle: {
                   backgroundColor: '#28303B',
                 },
@@ -60,7 +60,7 @@ export default function App() {
               name="NewProject"
               component={NewProject}
               options={{
-                title: 'New Project',
+                title: 'Projects',
                 headerStyle: {
                   backgroundColor: '#28303B',
                 },
