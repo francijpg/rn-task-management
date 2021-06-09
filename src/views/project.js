@@ -43,6 +43,7 @@ const Project = ({route}) => {
       await newTask({
         variables: {input: {name, project: id}},
       });
+      setName('');
       showToast('success', 'Task created', 'Task created successfully');
     } catch (e) {
       console.log(JSON.stringify(e, null, 2));
@@ -69,14 +70,14 @@ const Project = ({route}) => {
             <Text style={globalStyles.buttonText}>create task</Text>
           </Button>
 
-          <Heading py={4} style={globalStyles.subtitle}>
-            Tasks: {route.params.name}
+          <Heading size="sm" bold color="white" mt="5" textAlign={['center']}>
+            {route.params.name} tasks
           </Heading>
-          <List.Ordered my={0} space={0} style={styles.list}>
+          <List my={0} space={0} style={styles.list}>
             {data.getTasks.map(task => (
               <TaskList key={task.id} task={task} projectId={id} />
             ))}
-          </List.Ordered>
+          </List>
         </VStack>
       </Center>
     </>
@@ -86,7 +87,6 @@ const Project = ({route}) => {
 const styles = StyleSheet.create({
   list: {
     borderWidth: 0,
-    // borderBottomColor: 0,
   },
 });
 
